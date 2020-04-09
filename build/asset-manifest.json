@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Beaubi/static/css/main.edfa3908.chunk.css",
+    "main.js": "/Beaubi/static/js/main.8704e54a.chunk.js",
+    "main.js.map": "/Beaubi/static/js/main.8704e54a.chunk.js.map",
+    "runtime~main.js": "/Beaubi/static/js/runtime~main.592a197f.js",
+    "runtime~main.js.map": "/Beaubi/static/js/runtime~main.592a197f.js.map",
+    "static/js/2.10bc15b0.chunk.js": "/Beaubi/static/js/2.10bc15b0.chunk.js",
+    "static/js/2.10bc15b0.chunk.js.map": "/Beaubi/static/js/2.10bc15b0.chunk.js.map",
+    "index.html": "/Beaubi/index.html",
+    "precache-manifest.f09a5a269cad2f90b8aeabe7d0e4246f.js": "/Beaubi/precache-manifest.f09a5a269cad2f90b8aeabe7d0e4246f.js",
+    "service-worker.js": "/Beaubi/service-worker.js",
+    "static/css/main.edfa3908.chunk.css.map": "/Beaubi/static/css/main.edfa3908.chunk.css.map"
+  }
+}
