@@ -4,6 +4,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm install react-hook-form`
+
+### `npm install semantic-ui-react` 
+
+To install important dependencies for the project. 
+To start up your local server run: 
+
 ### `npm start`
 
 Runs the app in the development mode.<br />
