@@ -1,31 +1,35 @@
 import React, { Component } from 'react'
 import Example from "./form";
 import { Button, Form } from 'semantic-ui-react'
-
+import $ from "jquery";
 function validateF(Brand, Product, Category,URL) {
-  /*return {
-    Brand: Brand.length > 0,
-    Product: Product.length > 0,
-    Category: Category.length > 0,
-    URL: URL.length > 0 
-  };*/
+
   if (URL.length)
   {
     return {
       Brand: Brand.length ? true : false,
       Product: Product.length ? true : false,
       Category: Category.length ? true : false,
-      URL: false
+      URL: false,
+      Message:"The following field(s) should be empty (Input a new URL, not a Product): "
     };
   }else if(Brand.length || Product.length || Category.length){
       return {
       Brand: Brand.length ? false : true,
       Product: Product.length ? false : true,
       Category: Category.length ? false : true,
-      URL: URL.length ? true : false
+      URL: URL.length ? true : false,
+      Message:"The following field(s) should not be empty (Input a new product, not an URL): "
     };
-  }else{
-    return {}
+  }else {
+    return {
+      Brand: Brand.length ? false : true,
+      Product: Product.length ? false : true,
+      Category: Category.length ? false : true,
+      URL: true,
+      Message: 'No input detected, please enter an URL or a Product.'
+    };
+
   }
 }
 function validateU(URL)
@@ -38,11 +42,12 @@ export default class newForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
       Brand: "",
       Product: "",
       Category:"",
       URL: "",
-
+      Message: "",
       everFocusedBrand: false,
       everFocusedProduct: false,
       everFocusedCategory: false,
@@ -62,11 +67,10 @@ export default class newForm extends React.Component {
   };
 handleURLChange = evt => {
     this.setState({ URL: evt.target.value });
-    console.log(this.state.URL.length>0)
   };
   handleProductChange = evt => {
     this.setState({ Product: evt.target.value });
-    console.log(this.state.Product.length>0)
+    
   };
   handleCategoryChange = evt => {
     this.setState({ Category: evt.target.value });
@@ -79,9 +83,10 @@ handleURLChange = evt => {
   canBeSubmitted = () => {
     if ((this.state.URL.length==0 &&(this.state.Product.length>0 && this.state.Brand.length>0 && this.state.Category.length>0 && this.state.Brand.length>0)))
     {
+      $('.message').fadeOut(150)
       return false
     }else if(this.state.URL.length>0 && ((this.state.Product.length==0 && this.state.Brand.length==0 && this.state.Category.length==0 && this.state.Brand.length==0))){
-      console.log('b')
+      $('.message').fadeOut(150)
       return false
     }else{
       return true
@@ -95,8 +100,24 @@ handleURLChange = evt => {
     }else{
       evt.preventDefault();
       const { Brand, Product, Category } = this.state;
-      alert(`Added row to google spreadsheet:  Brand: ${Brand} Product: ${Product} Category: ${Category}`);
-      
+      if($('.message').hasClass('warning')){
+        $('.message').removeClass('warning');
+        $('.message').addClass('success');
+        $('.message').show(0,function(){
+           $('#no').hide();
+           $('#yes').show();
+           $('.message').hide(3500,function(){
+              $('#yes').hide();
+              $('#no').show();
+              $('.message').removeClass('success');
+              $('.message').addClass('warning');
+           });
+        });
+      }
+      this.state.touched['Brand'] = false;
+      this.state.touched['Product'] = false;
+      this.state.touched['Category'] = false;
+      this.state.touched['URL'] = false;    
     }
   };
   render() {
@@ -106,11 +127,22 @@ handleURLChange = evt => {
     const shouldMarkError = field => {
       const hasError = errors[field];
       const shouldShow = this.state.touched[field];
+      $(".headerM span").remove();
+      $("#err"+field).remove();
+      if(hasError && shouldShow)
+      {
 
+        $('.headerM').append('<span>'+errors['Message']+'</span>')
+        $('.message ul').append('<li id="err'+field+'">'+field+'</li>');
+        $('.message').fadeIn();
+      }else{
+        $("#err"+field).remove();
+        $(".headerM span").remove();
+      }
       return hasError ? shouldShow : false;
     };
     return (
-    <Form name="test-form" id="form1" onSubmit={this.handleSubmit}>
+    <Form name="test-form" method="GET" id="form1" onSubmit={this.handleSubmit}>
     <Form.Group widths={3}>
       <Form.Input name='URL' 
                   className={shouldMarkError('URL') ? "error" : ""} 

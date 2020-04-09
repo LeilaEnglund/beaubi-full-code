@@ -5,6 +5,7 @@ import { Container} from "semantic-ui-react";
 import "./style.css";
 import Example from "./form";
 import Form from "./newForm";
+import Message from "./message"
 import $ from "jquery";
 
 const App = ({ children }) => (
@@ -31,7 +32,7 @@ ReactDOM.render(
   <App>
 
    
-
+<Message />
 
 
 <div class="thb_title  style7  " id="thb-title-5e8b3aba96479">
@@ -54,6 +55,8 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
+$('.message').hide()
+$('#yes').hide()
 const scriptURL = 'https://script.google.com/macros/s/AKfycbzsOg97v-SDaVibiJqN9tzp38TtpPcGuKiNcN6Cx-zQUha_ajK2/exec'
 const form = document.forms['test-form']
 form.addEventListener('submit', e => {
